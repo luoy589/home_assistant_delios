@@ -100,18 +100,18 @@ class DeliosAPI:
                 resp = await self._session.post(LOG_DAILY_URL, json=payload)
                 data = await resp.json()
                 self._data.update({
-                    "power_pv": data.get("powerpv"),
-                    "power_batt": data.get("powerbatt"),
-                    "power_grid": data.get("powergrid"),
-                    "power_house": data.get("powerhouse"),
-                    "percent_batt": data.get("percentbattery"),
-                    "daily_energy_pv": data.get("energy_pv"),
-                    "daily_energy_batt_dischar": data.get("energy_battery_discha"),
-                    "daily_energy_batt_char": data.get("energy_battery_char"),
-                    "daily_energy_grid_taken": data.get("energy_grid_consumed"),
-                    "daily_energy_grid_given": data.get("energy_grid_feed_in"),
-                    "daily_energy_house": data.get("energy_powerhouse"),
-                    "daily_self_sufficiency": data.get("self_sufficiency")
+                    "power_pv": round(data.get("powerpv"),1),
+                    "power_batt": round(data.get("powerbatt"),1),
+                    "power_grid": round(data.get("powergrid"),1),
+                    "power_house": round(data.get("powerhouse"),1),
+                    "percent_batt": int(data.get("percentbattery")),
+                    "daily_energy_pv": round(data.get("energy_pv"),1),
+                    "daily_energy_batt_dischar": round(data.get("energy_battery_discha"),1),
+                    "daily_energy_batt_char": round(data.get("energy_battery_char"),1),
+                    "daily_energy_grid_taken": round(data.get("energy_grid_consumed"),1),
+                    "daily_energy_grid_given": round(data.get("energy_grid_feed_in"),1),
+                    "daily_energy_house": round(data.get("energy_powerhouse"),1),
+                    "daily_self_sufficiency": int(data.get("self_sufficiency"))
                 })
                 _LOGGER.debug("Dati Delios giornalieri aggiornati: %s", self._data)
         except Exception as e:
@@ -138,11 +138,11 @@ class DeliosAPI:
                 if "data" in data and data["data"]:
                     last_year = data["data"][-1]
                     self._data.update({
-                        "annual_energy_pv": last_year.get("chart_powerpv"),
-                        "annual_energy_grid_given": last_year.get("chart_powergrid"),
-                        "annual_energy_house": last_year.get("energy_powerhouse"),
-                        "annual_energy_grid_taken": last_year.get("energy_grid_consumed"),
-                        "annual_self_sufficiency": last_year.get("self_sufficiency")
+                        "annual_energy_pv": int(last_year.get("chart_powerpv")),
+                        "annual_energy_grid_given": int(last_year.get("chart_powergrid")),
+                        "annual_energy_house": int(last_year.get("energy_powerhouse")),
+                        "annual_energy_grid_taken": int(last_year.get("energy_grid_consumed")),
+                        "annual_self_sufficiency": int(last_year.get("self_sufficiency"))
                     })
                     _LOGGER.debug("Dati Delios annuali aggiornati: %s", self._data)
         except Exception as e:
