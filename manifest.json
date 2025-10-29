@@ -1,0 +1,9 @@
+{
+    "domain": "delios",
+    "name": "Delios",
+    "version": "1.0.0",
+    "documentation": "github.com/luoy589/home_assistant_delios",
+    "requirements": ["aiohttp", "async-timeout"],
+    "dependencies": [],
+    "codeowners": []
+  }
