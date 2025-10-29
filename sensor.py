@@ -16,7 +16,8 @@ DEFAULT_HEADERS = {
     "User-Agent": "HomeAssistant/DeliosIntegration"
 }
 
-SCAN_INTERVAL = timedelta(minutes=1)
+DAILY_INTERVAL = timedelta(minutes=1)
+ANNUAL_INTERVAL = timedelta(days=1)
 
 
 async def async_setup_platform(hass, config, add_entities, discovery_info=None):
@@ -56,11 +57,21 @@ async def async_setup_platform(hass, config, add_entities, discovery_info=None):
 
     add_entities(sensors, update_before_add=True)
 
-    async def update_sensors(event_time):
+    async def update_daily(event_time):
         for sensor in sensors:
-            await sensor.async_update_ha_state(True)
+            # update the daily measures every minute
+            if not sensor._key.startswith("annual_"):
+                await sensor.async_update_ha_state(True)
 
-    async_track_time_interval(hass, update_sensors, SCAN_INTERVAL)
+    async def update_annual(event_time):
+        for sensor in sensors:
+            # update the annual measures every day
+            if sensor._key.startswith("annual_"):
+                await sensor.async_update_ha_state(True)
+
+    # Timer separati
+    async_track_time_interval(hass, update_daily, DAILY_INTERVAL)
+    async_track_time_interval(hass, update_annual, ANNUAL_INTERVAL)
 
 
 class DeliosAPI:
