@@ -41,7 +41,7 @@ async def async_setup_platform(hass, config, add_entities, discovery_info=None):
         DeliosSensor(api, "03 Power PV", "power_pv", "kW", "mdi:solar-power"),
         DeliosSensor(api, "04 Power Grid", "power_grid", "kW", "mdi:transmission-tower"),
         DeliosSensor(api, "05 Power Battery", "power_batt", "kW", "mdi:battery-arrow-down"),
-        DeliosSensor(api, "06 Daily energy house", "daily_energy_house", "kWh"),
+        DeliosSensor(api, "06 Daily energy house", "daily_energy_house", "kWh", "mdi:home-lightning-bolt"),
         DeliosSensor(api, "07 Daily energy taken", "daily_energy_grid_taken", "kWh", "mdi:transmission-tower-export"),
         DeliosSensor(api, "08 Daily energy given", "daily_energy_grid_given", "kWh", "mdi:transmission-tower-import"),
         DeliosSensor(api, "09 Daily energy PV", "daily_energy_pv", "kWh"),
